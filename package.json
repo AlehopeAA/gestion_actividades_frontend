@@ -45,9 +45,9 @@
     "jspdf-autotable": "^3.5.23",
     "match-sorter": "6.3.0",
     "mini-css-extract-plugin": "^2.4.5",
-    "moment": "2.29.1",
+    "moment": "^2.29.4",
     "nouislider": "15.0.0",
-    "npm": "^9.8.1",
+    "npm": "^9.7.1",
     "perfect-scrollbar": "1.5.1",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -56,11 +56,11 @@
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
     "react": "17.0.2",
-    "react-app-polyfill": "^2.0.0",
+    "react-app-polyfill": "^3.0.0",
     "react-big-calendar": "0.33.2",
     "react-bootstrap-sweetalert": "5.2.0",
     "react-chartist": "0.14.4",
-    "react-data-export": "^0.6.0",
+    "react-data-export": "^0.4.2",
     "react-dev-utils": "^12.0.1",
     "react-dom": "17.0.2",
     "react-export-excel": "^0.5.3",
@@ -69,7 +69,6 @@
     "react-redux": "^7.2.4",
     "react-refresh": "^0.11.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.3",
     "react-swipeable-views": "^0.14.0",
     "react-table": "7.7.0",
     "react-tooltip": "^4.2.21",
@@ -88,8 +87,7 @@
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
-    "workbox-webpack-plugin": "^6.4.1",
-    "xlsx": "^0.18.5"
+    "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -104,14 +102,14 @@
     "map-sass": "node-sass src/assets/scss/material-ui-react.scss src/assets/css/material-dashboard-pro-react.css --source-map true"
   },
   "optionalDependencies": {
-    "@babel/core": "7.14.0",
+    "@babel/core": "^7.14.0",
     "typescript": "4.2.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
-    "gulp": "4.0.2",
+    "gulp": "^4.0.2",
     "gulp-append-prepend": "1.0.9",
     "prettier": "2.2.1"
   },
@@ -132,5 +130,64 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [
+      "C:\\Users\\alexg\\Desktop\\ALEHOP\\alehope-main\\alehope-main\\Frontend\\src"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

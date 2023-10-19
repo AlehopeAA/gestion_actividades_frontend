@@ -46,8 +46,41 @@ import {
   USER_REGISTER_FAVORITES_REQUEST,
   USER_REGISTER_FAVORITES_SUCCESS,
   USER_REGISTER_FAVORITES_FAIL,
+  USER_SHARED_TASKS_COUNT_REQUEST,
+  USER_SHARED_TASKS_COUNT_SUCCESS,
+  USER_SHARED_TASKS_COUNT_FAIL,
+
 } from '../constants/userConstants'
 import parseJwt from 'shared/middlewares/parseJwt'
+
+export const getSharedTasksCount = (perfil) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_SHARED_TASKS_COUNT_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    };
+
+    const { data } = await axios.get(`/api/tareas/tareascompartidas/${perfil}`, config);
+
+    dispatch({ type: USER_SHARED_TASKS_COUNT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_SHARED_TASKS_COUNT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const login = (infoObject) => async (dispatch) => {
   try {
@@ -58,7 +91,7 @@ export const login = (infoObject) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     }
-
+   debugger
     const {
       data: { validadores, responsables, tareas, favorites, objetivos, token },
     } = await axios.post('/api/users/login', infoObject, config)

@@ -34,6 +34,7 @@ import {
   userListByProfileIdReducer,
   userGetFavoritesReducer,
   userRegisterFavoritesReducer,
+  userSharedTasksCountReducer,
 } from './userReducers'
 import {
   logRegisterReducer,
@@ -167,6 +168,7 @@ import {
   teamWorkRegisterByValidatorReducer,
   teamWorkRegisterByPermissionReducer,
   teamWorkHistoricalListReducer,
+  profileRegisterByValidatorReducer,
 } from './teamWorkReducer'
 
 import {
@@ -199,6 +201,7 @@ import {
   objetiveSpecificListReducer,
   objetivesSpecificDeleteReducer,
   objetivesSpecificUpdateReducer,
+  objetivesByTaskReducer,
 } from './objetivesSpecificsReducer'
 
 import {
@@ -358,6 +361,7 @@ export default combineReducers({
   teamWorkRegisterByResponsible: teamWorkRegisterByResponsibleReducer,
   teamWorkRegisterByPermission: teamWorkRegisterByPermissionReducer,
   teamWorkRegisterByValidator: teamWorkRegisterByValidatorReducer,
+  profileRegisterByValidator: profileRegisterByValidatorReducer,
   teamWorksByResponsible: teamWorksByResponsibleReducer,
   teamWorksByValidator: teamWorksByValidatorReducer,
   teamWorkHistoricalList: teamWorkHistoricalListReducer,
@@ -394,6 +398,7 @@ export default combineReducers({
   userUpdate: userUpdateReducer,
   userGetFavorites: userGetFavoritesReducer,
   userRegisterFavorites: userRegisterFavoritesReducer,
+  userSharedTasksCount:userSharedTasksCountReducer,
   taskById: taskByIdReducer,
   activitiesRegister: activitiesRegisterReducer,
   objetiveAbsenceRegister: objetiveAbsenceRegisterReducer,
@@ -408,6 +413,7 @@ export default combineReducers({
   objetiveSpecificList: objetiveSpecificListReducer,
   objetivesSpecificDelete: objetivesSpecificDeleteReducer,
   objetivesSpecificUpdate: objetivesSpecificUpdateReducer,
+  objetivesByTask: objetivesByTaskReducer,
   objetiveOrdExtOtherRegister: objetiveOrdExtOtherRegisterReducer,
   objetiveOrdExtOtherList: objetiveOrdExtOtherListReducer,
   objetiveHistoricalList: objetiveHistoricalListReducer,
