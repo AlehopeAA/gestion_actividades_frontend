@@ -45,7 +45,7 @@ const UserProfileScreen = ({ history }) => {
 
   useEffect(() => {
     if (profileInfo) {
-      setUserInfo({ ...userInformation, profileInfo })
+      setUserInfo({ ...userInformation, ...profileInfo, profileInfo })
     }
   }, [profileInfo])
 
@@ -75,8 +75,11 @@ const UserProfileScreen = ({ history }) => {
                   <h4 className={classes.cardTitle}>
                     {userInfo?.nombre} {userInfo?.apellido1} {userInfo?.apellido2 || ''}
                   </h4>
-                  <p className={classes.description}>Codigo AYRE · {userInfo?.cod_ayre}</p>
-                  <p className={classes.description}>Puesto · {userInfo?.denominacion_puesto || 'Sin Denominación'}</p>
+                  {
+                    console.log('userInfo desde html',userInfo)
+                  }
+                  <p className={classes.description}>Codigo AYRE · {userInformation?.cod_ayre}</p>
+                  <p className={classes.description}>Puesto · {userInformation?.denominacion_puesto || 'Sin Denominación'}</p>
                 </CardBody>
               </Card>
             </GridItem>
