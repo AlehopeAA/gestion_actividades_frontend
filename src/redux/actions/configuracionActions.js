@@ -93,11 +93,22 @@ export const configuracionUpdateInfo = (configuracion) => async (dispatch, getSt
   }
 }
 
-export const deleteConfiguracion = (id) => async (dispatch) => {
+export const deleteConfiguracion = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: CONFIGURACION_DELETE_REQUEST })
 
-    await axios.delete(`/api/configuraciones/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/configuraciones/${id}`, config)
 
     dispatch({ type: CONFIGURACION_DELETE_SUCCESS })
   } catch (error) {

@@ -79,11 +79,22 @@ export const taskGeneralUpdateInfo = (taskGeneral) => async (dispatch, getState)
   }
 }
 
-export const deleteTaskGeneral = (id) => async (dispatch) => {
+export const deleteTaskGeneral = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_GENERAL_DELETE_REQUEST })
 
-    await axios.delete(`/api/tareasgenerales/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/tareasgenerales/${id}`, config)
 
     dispatch({ type: TASK_GENERAL_DELETE_SUCCESS })
   } catch (error) {

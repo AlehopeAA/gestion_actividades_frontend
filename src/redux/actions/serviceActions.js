@@ -88,11 +88,22 @@ export const serviceUpdateInfo = (service) => async (dispatch, getState) => {
    }
 }
 
-export const deleteService = (id) => async (dispatch) => {
+export const deleteService = (id) => async (dispatch, getState) => {
    try {
       dispatch({ type: SERVICE_DELETE_REQUEST })
 
-      await axios.delete(`/api/perfilservicios/${id}`)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+   
+       await axios.delete(`/api/perfilservicios/${id}`, config)
 
       dispatch({ type: SERVICE_DELETE_SUCCESS })
    } catch (error) {

@@ -115,11 +115,22 @@ export const departamentUpdateInfo = (departament) => async (
   }
 }
 
-export const deleteDepartament = (id) => async (dispatch) => {
+export const deleteDepartament = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: DEPARTAMENT_DELETE_REQUEST })
 
-    await axios.delete(`/api/perfildepartamentos/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/perfildepartamentos/${id}`, config)
 
     dispatch({ type: DEPARTAMENT_DELETE_SUCCESS })
   } catch (error) {

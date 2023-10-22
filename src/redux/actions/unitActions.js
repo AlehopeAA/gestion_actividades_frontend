@@ -88,11 +88,22 @@ export const unitUpdateInfo = (unit) => async (dispatch, getState) => {
    }
 }
 
-export const deleteUnit = (id) => async (dispatch) => {
+export const deleteUnit = (id) => async (dispatch, getState) => {
    try {
       dispatch({ type: UNIT_DELETE_REQUEST })
 
-      await axios.delete(`/api/perfilunidades/${id}`)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+   
+       await axios.delete(`/api/perfilunidades/${id}`, config)
 
       dispatch({ type: UNIT_DELETE_SUCCESS })
    } catch (error) {

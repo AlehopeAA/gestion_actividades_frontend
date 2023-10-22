@@ -89,11 +89,22 @@ export const festivosUpdateInfo = (festivos) => async (dispatch, getState) => {
   }
 }
 
-export const deleteFestivos = (id) => async (dispatch) => {
+export const deleteFestivos = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: FESTIVOS_DELETE_REQUEST })
 
-    await axios.delete(`/api/festivos/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/festivos/${id}`, config)
 
     dispatch({ type: FESTIVOS_DELETE_SUCCESS })
   } catch (error) {

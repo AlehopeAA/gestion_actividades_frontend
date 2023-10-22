@@ -139,11 +139,22 @@ export const subdirectionUpdateInfo = (subdireccion) => async (dispatch, getStat
   }
 }
 
-export const deleteSubdirection = (id) => async (dispatch) => {
+export const deleteSubdirection = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: SUBDIRECTION_DELETE_REQUEST })
 
-    await axios.delete(`/api/perfilsubdirecciones/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/perfilsubdirecciones/${id}`, config)
 
     dispatch({ type: SUBDIRECTION_DELETE_SUCCESS })
   } catch (error) {

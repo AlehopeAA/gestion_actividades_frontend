@@ -213,11 +213,22 @@ export const getTeamWorksValidator = (idJobPosition) => async (dispatch, getStat
   }
 }
 
-export const deleteTeamWork = (id) => async (dispatch) => {
+export const deleteTeamWork = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: TEAM_WORK_DELETE_REQUEST })
 
-    await axios.delete(`/api/puestostrabajo/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/puestostrabajo/${id}`, config)
 
     dispatch({ type: TEAM_WORK_DELETE_SUCCESS })
   } catch (error) {

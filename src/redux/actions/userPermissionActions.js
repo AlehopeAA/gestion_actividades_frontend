@@ -105,11 +105,22 @@ export const userPermissionUpdateInfo = (userPermission) => async (
   }
 }
 
-export const deleteUserPermission = (id) => async (dispatch) => {
+export const deleteUserPermission = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_PERMISSION_DELETE_REQUEST })
 
-    await axios.delete(`/api/permisospuesto/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/permisospuesto/${id}`, config)
 
     dispatch({ type: USER_PERMISSION_DELETE_SUCCESS })
   } catch (error) {

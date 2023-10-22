@@ -121,11 +121,22 @@ export const taskSpecificUpdateInfo = (task) => async (dispatch, getState) => {
   }
 }
 
-export const deleteTaskSpecific = (id) => async (dispatch) => {
+export const deleteTaskSpecific = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_SPECIFIC_DELETE_REQUEST })
 
-    await axios.delete(`/api/tareasespecificas/${id}`)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    await axios.delete(`/api/tareasespecificas/${id}`, config)
 
     dispatch({ type: TASK_SPECIFIC_DELETE_SUCCESS })
   } catch (error) {
