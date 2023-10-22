@@ -21,7 +21,13 @@ export const registerService = (service) => async (dispatch) => {
    try {
       dispatch({ type: SERVICE_REGISTER_REQUEST })
 
-      const { data } = await axios.post('/api/perfilservicios', service)
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.post('/api/perfilservicios', service, config)
 
       dispatch({ type: SERVICE_REGISTER_SUCCESS, payload: data })
    } catch (error) {
@@ -32,11 +38,15 @@ export const registerService = (service) => async (dispatch) => {
    }
 }
 
-export const getServices = () => async (dispatch) => {
+export const getServices = () => async (dispatch, getState) => {
    try {
       dispatch({ type: SERVICE_LIST_REQUEST })
 
-      const config = {
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
          headers: {
            Authorization: `Bearer ${userInfo.token}`,
            'Cache-Control': 'no-cache',
@@ -53,11 +63,21 @@ export const getServices = () => async (dispatch) => {
    }
 }
 
-export const serviceUpdateInfo = (service) => async (dispatch) => {
+export const serviceUpdateInfo = (service) => async (dispatch, getState) => {
    try {
       dispatch({ type: SERVICE_UPDATE_REQUEST })
 
-      const { data } = await axios.put(`/api/perfilservicios/${service.id_servicio}`, service)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.put(`/api/perfilservicios/${service.id_servicio}`, service, config)
 
       dispatch({ type: SERVICE_UPDATE_SUCCESS, payload: data })
    } catch (error) {

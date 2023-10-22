@@ -18,7 +18,13 @@ export const registerPermission = (permission) => async (dispatch) => {
   try {
     dispatch({ type: PERMISSION_REGISTER_REQUEST })
 
-    const { data } = await axios.post('/api/permisos', permission)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.post('/api/permisos', permission, config)
 
     dispatch({ type: PERMISSION_REGISTER_SUCCESS, payload: data })
   } catch (error) {
@@ -29,9 +35,13 @@ export const registerPermission = (permission) => async (dispatch) => {
   }
 }
 
-export const getPermissions = () => async (dispatch) => {
+export const getPermissions = () => async (dispatch, getState) => {
   try {
     dispatch({ type: PERMISSION_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {
@@ -50,11 +60,21 @@ export const getPermissions = () => async (dispatch) => {
   }
 }
 
-export const permissionUpdateInfo = (permission) => async (dispatch) => {
+export const permissionUpdateInfo = (permission) => async (dispatch, getState) => {
   try {
     dispatch({ type: PERMISSION_UPDATE_REQUEST })
 
-    const { data } = await axios.put(`/api/permisos/${permission.id_permiso}`, permission)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.put(`/api/permisos/${permission.id_permiso}`, permission, config)
 
     dispatch({ type: PERMISSION_UPDATE_SUCCESS, payload: data })
   } catch (error) {

@@ -18,7 +18,13 @@ export const registerTaskAbsence = (taskAbsence) => async (dispatch) => {
   try {
     dispatch({ type: TASK_ABSENCE_REGISTER_REQUEST })
 
-    const { data } = await axios.post('/api/tareasausencias', taskAbsence)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.post('/api/tareasausencias', taskAbsence, config)
 
     dispatch({ type: TASK_ABSENCE_REGISTER_SUCCESS, payload: data })
   } catch (error) {
@@ -29,9 +35,13 @@ export const registerTaskAbsence = (taskAbsence) => async (dispatch) => {
   }
 }
 
-export const getTaskAbsences = () => async (dispatch) => {
+export const getTaskAbsences = () => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_ABSENCE_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {

@@ -14,11 +14,21 @@ import {
   FESTIVOS_DELETE_SUCCESS,
 } from '../constants/festivosConstants.js'
 
-export const registerFestivos = (festivos) => async (dispatch) => {
+export const registerFestivos = (festivos) => async (dispatch, getState) => {
   try {
     dispatch({ type: FESTIVOS_REGISTER_REQUEST })
 
-    const { data } = await axios.post('/api/festivos', festivos)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.post('/api/festivos', festivos, config)
 
     dispatch({ type: FESTIVOS_REGISTER_SUCCESS, payload: data })
   } catch (error) {
@@ -29,9 +39,13 @@ export const registerFestivos = (festivos) => async (dispatch) => {
   }
 }
 
-export const getFestivos = () => async (dispatch) => {
+export const getFestivos = () => async (dispatch, getState) => {
   try {
     dispatch({ type: FESTIVOS_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {
@@ -50,11 +64,21 @@ export const getFestivos = () => async (dispatch) => {
   }
 }
 
-export const festivosUpdateInfo = (festivos) => async (dispatch) => {
+export const festivosUpdateInfo = (festivos) => async (dispatch, getState) => {
   try {
     dispatch({ type: FESTIVOS_UPDATE_REQUEST })
 
-    const { data } = await axios.put(`/api/festivos/${festivos.id_calendario}`, festivos)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.put(`/api/festivos/${festivos.id_calendario}`, festivos, config)
 
     dispatch({ type: FESTIVOS_UPDATE_SUCCESS, payload: data })
   } catch (error) {

@@ -17,11 +17,21 @@ import {
   CONFIGURACION_HISTORICAL_FAIL,
 } from '../constants/configuracionConstants.js'
 
-export const registerConfiguracion = (configuracion) => async (dispatch) => {
+export const registerConfiguracion = (configuracion) => async (dispatch, getState) => {
   try {
     dispatch({ type: CONFIGURACION_REGISTER_REQUEST })
 
-    const { data } = await axios.post('/api/configuraciones', configuracion)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.post('/api/configuraciones', configuracion, config)
 
     dispatch({ type: CONFIGURACION_REGISTER_SUCCESS, payload: data })
   } catch (error) {
@@ -32,9 +42,13 @@ export const registerConfiguracion = (configuracion) => async (dispatch) => {
   }
 }
 
-export const getConfiguracions = () => async (dispatch) => {
+export const getConfiguracions = () => async (dispatch, getState) => {
   try {
     dispatch({ type: CONFIGURACION_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {

@@ -29,9 +29,13 @@ export const registerTaskGeneral = (taskGeneral) => async (dispatch) => {
   }
 }
 
-export const getTaskGenerals = () => async (dispatch) => {
+export const getTaskGenerals = () => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_GENERAL_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {

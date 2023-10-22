@@ -21,7 +21,13 @@ export const registerProfile = (profile) => async (dispatch) => {
    try {
       dispatch({ type: PROFILE_REGISTER_REQUEST })
 
-      const { data } = await axios.post('/api/perfiles', profile)
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.post('/api/perfiles', profile, config)
 
       dispatch({ type: PROFILE_REGISTER_SUCCESS, payload: data })
    } catch (error) {
@@ -59,11 +65,21 @@ export const getProfiles = () => async (dispatch, getState) => {
    }
 }
 
-export const profileUpdateInfo = (profile) => async (dispatch) => {
+export const profileUpdateInfo = (profile) => async (dispatch, getState) => {
    try {
       dispatch({ type: PROFILE_UPDATE_REQUEST })
 
-      const { data } = await axios.put(`/api/perfiles/${profile.id_perfil}`, profile)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.put(`/api/perfiles/${profile.id_perfil}`, profile, config)
 
       dispatch({ type: PROFILE_UPDATE_SUCCESS, payload: data })
    } catch (error) {

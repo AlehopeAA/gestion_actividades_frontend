@@ -21,7 +21,13 @@ export const registerUnit = (unit) => async (dispatch) => {
    try {
       dispatch({ type: UNIT_REGISTER_REQUEST })
 
-      const { data } = await axios.post('/api/perfilunidades', unit)
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.post('/api/perfilunidades', unit, config)
 
       dispatch({ type: UNIT_REGISTER_SUCCESS, payload: data })
    } catch (error) {
@@ -32,11 +38,15 @@ export const registerUnit = (unit) => async (dispatch) => {
    }
 }
 
-export const getUnits = () => async (dispatch) => {
+export const getUnits = () => async (dispatch, getState) => {
    try {
       dispatch({ type: UNIT_LIST_REQUEST })
 
-      const config = {
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
          headers: {
            Authorization: `Bearer ${userInfo.token}`,
            'Cache-Control': 'no-cache',
@@ -53,11 +63,21 @@ export const getUnits = () => async (dispatch) => {
    }
 }
 
-export const unitUpdateInfo = (unit) => async (dispatch) => {
+export const unitUpdateInfo = (unit) => async (dispatch, getState) => {
    try {
       dispatch({ type: UNIT_UPDATE_REQUEST })
 
-      const { data } = await axios.put(`/api/perfilunidades/${unit.id_unidad}`, unit)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.put(`/api/perfilunidades/${unit.id_unidad}`, unit, config)
 
       dispatch({ type: UNIT_UPDATE_SUCCESS, payload: data })
    } catch (error) {

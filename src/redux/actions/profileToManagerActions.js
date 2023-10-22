@@ -62,11 +62,21 @@ export const getProfileToManagers = (managerId) => async (dispatch, getState) =>
   }
 }
 
-export const profileToManagerUpdateInfo = (profileToManager) => async (dispatch) => {
+export const profileToManagerUpdateInfo = (profileToManager) => async (dispatch, getState) => {
   try {
     dispatch({ type: PROFILE_TO_MANAGER_UPDATE_REQUEST })
 
-    const { data } = await axios.put(`/api/${profileToManager.id_}`, profileToManager)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.put(`/api/${profileToManager.id_}`, profileToManager, config)
 
     dispatch({ type: PROFILE_TO_MANAGER_UPDATE_SUCCESS, payload: data })
   } catch (error) {

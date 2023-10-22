@@ -29,9 +29,13 @@ export const registerTaskType = (taskType) => async (dispatch) => {
   }
 }
 
-export const getTaskTypes = () => async (dispatch) => {
+export const getTaskTypes = () => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_TYPE_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {
@@ -50,11 +54,21 @@ export const getTaskTypes = () => async (dispatch) => {
   }
 }
 
-export const taskTypeUpdateInfo = (taskType) => async (dispatch) => {
+export const taskTypeUpdateInfo = (taskType) => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_TYPE_UPDATE_REQUEST })
 
-    const { data } = await axios.put(`/api/tipostareas/${taskType.id_tipos_tarea}`, taskType)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.put(`/api/tipostareas/${taskType.id_tipos_tarea}`, taskType, config)
 
     dispatch({ type: TASK_TYPE_UPDATE_SUCCESS, payload: data })
   } catch (error) {

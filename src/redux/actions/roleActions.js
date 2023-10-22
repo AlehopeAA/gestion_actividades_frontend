@@ -21,7 +21,13 @@ export const registerRole = (role) => async (dispatch) => {
    try {
       dispatch({ type: ROLE_REGISTER_REQUEST })
 
-      const { data } = await axios.post('/api/perfilroles', role)
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.post('/api/perfilroles', role, config)
 
       dispatch({ type: ROLE_REGISTER_SUCCESS, payload: data })
    } catch (error) {
@@ -32,11 +38,15 @@ export const registerRole = (role) => async (dispatch) => {
    }
 }
 
-export const getRoles = () => async (dispatch) => {
+export const getRoles = () => async (dispatch, getState) => {
    try {
       dispatch({ type: ROLE_LIST_REQUEST })
 
-      const config = {
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
          headers: {
            Authorization: `Bearer ${userInfo.token}`,
            'Cache-Control': 'no-cache',
@@ -53,11 +63,21 @@ export const getRoles = () => async (dispatch) => {
    }
 }
 
-export const roleUpdateInfo = (role) => async (dispatch) => {
+export const roleUpdateInfo = (role) => async (dispatch, getState) => {
    try {
       dispatch({ type: ROLE_UPDATE_REQUEST })
 
-      const { data } = await axios.put(`/api/perfilroles/${role.id_rol}`, role)
+      const {
+         userLogin: { userInfo },
+       } = getState()
+   
+       const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+       const { data } = await axios.put(`/api/perfilroles/${role.id_rol}`, role, config)
 
       dispatch({ type: ROLE_UPDATE_SUCCESS, payload: data })
    } catch (error) {

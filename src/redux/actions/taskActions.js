@@ -149,11 +149,21 @@ export const getTasksByProfileId = (id) => async (dispatch, getState) => {
   }
 }
 
-export const taskUpdateInfo = (task) => async (dispatch) => {
+export const taskUpdateInfo = (task) => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_UPDATE_REQUEST })
 
-    const { data } = await axios.put(`/api/tareas/${task.id_tarea}`, task)
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.put(`/api/tareas/${task.id_tarea}`, task, config)
 
     dispatch({ type: TASK_UPDATE_SUCCESS, payload: data })
   } catch (error) {
