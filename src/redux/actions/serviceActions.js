@@ -36,7 +36,13 @@ export const getServices = () => async (dispatch) => {
    try {
       dispatch({ type: SERVICE_LIST_REQUEST })
 
-      const { data } = await axios.get('/api/perfilservicios')
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+      const { data } = await axios.get('/api/perfilservicios', config)
 
       dispatch({ type: SERVICE_LIST_SUCCESS, payload: data })
    } catch (error) {

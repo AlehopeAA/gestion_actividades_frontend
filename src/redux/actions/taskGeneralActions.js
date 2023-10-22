@@ -33,7 +33,13 @@ export const getTaskGenerals = () => async (dispatch) => {
   try {
     dispatch({ type: TASK_GENERAL_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/tareasgenerales')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/tareasgenerales', config)
 
     dispatch({ type: TASK_GENERAL_LIST_SUCCESS, payload: data })
   } catch (error) {

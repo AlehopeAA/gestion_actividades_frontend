@@ -36,7 +36,13 @@ export const getConfiguracions = () => async (dispatch) => {
   try {
     dispatch({ type: CONFIGURACION_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/configuraciones')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/configuraciones', config)
 
     dispatch({ type: CONFIGURACION_LIST_SUCCESS, payload: data })
   } catch (error) {

@@ -33,7 +33,13 @@ export const getFestivos = () => async (dispatch) => {
   try {
     dispatch({ type: FESTIVOS_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/festivos')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/festivos', config)
 
     dispatch({ type: FESTIVOS_LIST_SUCCESS, payload: data })
   } catch (error) {

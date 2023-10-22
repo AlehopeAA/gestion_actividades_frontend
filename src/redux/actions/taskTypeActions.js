@@ -33,7 +33,13 @@ export const getTaskTypes = () => async (dispatch) => {
   try {
     dispatch({ type: TASK_TYPE_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/tipostareas')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/tipostareas', config)
 
     dispatch({ type: TASK_TYPE_LIST_SUCCESS, payload: data })
   } catch (error) {

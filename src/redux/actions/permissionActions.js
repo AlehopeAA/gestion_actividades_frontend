@@ -33,7 +33,13 @@ export const getPermissions = () => async (dispatch) => {
   try {
     dispatch({ type: PERMISSION_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/permisos')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/permisos', config)
 
     dispatch({ type: PERMISSION_LIST_SUCCESS, payload: data })
   } catch (error) {

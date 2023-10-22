@@ -33,7 +33,13 @@ export const getTaskAbsences = () => async (dispatch) => {
   try {
     dispatch({ type: TASK_ABSENCE_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/tareasausencias')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+    const { data } = await axios.get('/api/tareasausencias', config)
 
     dispatch({ type: TASK_ABSENCE_LIST_SUCCESS, payload: data })
   } catch (error) {

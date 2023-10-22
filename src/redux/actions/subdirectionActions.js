@@ -36,7 +36,13 @@ export const getSubdirections = () => async (dispatch) => {
    try {
       dispatch({ type: SUBDIRECTION_LIST_REQUEST })
 
-      const { data } = await axios.get('/api/perfilsubdirecciones')
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+      const { data } = await axios.get('/api/perfilsubdirecciones', config)
 
       dispatch({ type: SUBDIRECTION_LIST_SUCCESS, payload: data })
    } catch (error) {

@@ -36,7 +36,13 @@ export const getUnits = () => async (dispatch) => {
    try {
       dispatch({ type: UNIT_LIST_REQUEST })
 
-      const { data } = await axios.get('/api/perfilunidades')
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+      const { data } = await axios.get('/api/perfilunidades', config)
 
       dispatch({ type: UNIT_LIST_SUCCESS, payload: data })
    } catch (error) {

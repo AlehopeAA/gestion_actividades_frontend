@@ -262,7 +262,16 @@ export const getProfileInfo = () => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState()
 
-    const { data } = await axios.get(`/api/users/info-profile/${userInfo.id_puesto}`)
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    console.log('config', config)
+    //const { data } = await axios.get(`/api/users/info-profile/${userInfo.id_puesto}`)
+    const { data } = await axios.get(`/api/users/info-profile`, config)
 
     dispatch({ type: USER_PROFILE_INFO_SUCCESS, payload: data })
   } catch (error) {

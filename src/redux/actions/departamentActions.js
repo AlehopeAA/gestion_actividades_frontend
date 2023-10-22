@@ -36,7 +36,13 @@ export const getDepartaments = () => async (dispatch) => {
    try {
       dispatch({ type: DEPARTAMENT_LIST_REQUEST })
 
-      const { data } = await axios.get('/api/perfildepartamentos')
+      const config = {
+         headers: {
+           Authorization: `Bearer ${userInfo.token}`,
+           'Cache-Control': 'no-cache',
+         },
+       }
+      const { data } = await axios.get('/api/perfildepartamentos', config)
 
       dispatch({ type: DEPARTAMENT_LIST_SUCCESS, payload: data })
    } catch (error) {
