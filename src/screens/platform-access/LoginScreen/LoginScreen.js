@@ -59,7 +59,7 @@ const LoginScreen = ({ location, history }) => {
           withCredentials: true
         })
         .then(response => {
-          if (response.data.codAyre)
+          if (response.data.codHash)
           {
             dispatch(login(response.data))
           }
