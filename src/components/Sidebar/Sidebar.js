@@ -42,6 +42,7 @@ import { getCollapseStates, getCollapseInitialState, activeRoute } from '../../s
 import roles from 'config/roles/roles'
 import { logout } from 'redux/actions/userActions'
 import sidebarStyle from './styles/sidebarStyle'
+import avatar from 'assets/img/avatar.jpg'
 
 const useStyles = makeStyles(sidebarStyle)
 
@@ -228,7 +229,7 @@ const Sidebar = ({ color, logo, routes, bgColor, open, handleDrawerToggle, miniA
     <div className={userWrapperClass}>
       <div className={photo}>
         <img
-          src={`${axios.defaults.baseURL}/public/assets/img/avatars/avatar.jpg`}
+          src={avatar}
           className={classes.avatarImg}
           alt={userInfo?.nombre}
         />
