@@ -23,7 +23,7 @@ export const getDashboard = (filter) => async (dispatch, getState) => {
 
     dispatch({ type: DASHBOARD_INFO_SUCCESS, payload: data })
   } catch (error) {
-    dispatch({
+        dispatch({
       type: DASHBOARD_INFO_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })

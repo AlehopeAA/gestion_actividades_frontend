@@ -15,6 +15,7 @@ import { getProfileInfo } from 'redux/actions/userActions'
 import { getCurrentEvaluacion } from 'redux/actions/evaluacionActions'
 import styles from 'assets/jss/material-ui-react/views/userProfileStyles'
 import { EVALUACION_CURRENT_RESET } from 'redux/constants/evaluacionConstants'
+import avatar from 'assets/img/avatar.jpg'
 
 const useStyles = makeStyles(styles)
 
@@ -64,7 +65,7 @@ const UserProfileScreen = ({ history }) => {
               <Card profile>
                 <CardAvatar profile round={true}>
                   <a href='#user' onClick={(e) => e.preventDefault()}>
-                    <img src={`${axios.defaults.baseURL}/public/assets/img/avatars/avatar.jpg`} alt='...' />
+                    <img src={avatar} alt='...' />
                   </a>
                 </CardAvatar>
                 <CardBody profile>
@@ -75,9 +76,6 @@ const UserProfileScreen = ({ history }) => {
                   <h4 className={classes.cardTitle}>
                     {userInfo?.nombre} {userInfo?.apellido1} {userInfo?.apellido2 || ''}
                   </h4>
-                  {
-                    console.log('userInfo desde html',userInfo)
-                  }
                   <p className={classes.description}>Codigo AYRE · {userInformation?.cod_ayre}</p>
                   <p className={classes.description}>Puesto · {userInformation?.denominacion_puesto || 'Sin Denominación'}</p>
                 </CardBody>
