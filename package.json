@@ -93,6 +93,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start_https": "set HTTPS=true&npm run start",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "deploy": "npm run build",
