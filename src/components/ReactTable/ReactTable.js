@@ -31,11 +31,16 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 }
 fuzzyTextFilterFn.autoRemove = (val) => !val
 
-const ReactTable = ({ columns, data, numFilas }) => {
+const ReactTable = ({ columns, data, numFilas, color }) => {
   const classes = useStyles()
+
 
   const [numberOfRows, setNumberOfRows] = useState(numFilas ? numFilas : 10)
   const [pageSelect, handlePageSelect] = useState(0)
+
+
+  console.log(data)
+
 
   const filterTypes = useMemo(
     () => ({
@@ -85,7 +90,7 @@ const ReactTable = ({ columns, data, numFilas }) => {
   )
 
   let numberOfRowsData = [5, 10, 20, 25, 50, 100]
-  let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(function () {})
+  let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(function () { })
   return (
     <div style={{ display: 'block', maxWidth: '100%' }}>
       <div
@@ -189,7 +194,7 @@ const ReactTable = ({ columns, data, numFilas }) => {
         >
           <thead className='rt-thead -header'>
             {headerGroups.map((headerGroup) => (
-              <><tr {...headerGroup.getHeaderGroupProps()} className='rt-tr'>
+              <><tr {...headerGroup.getHeaderGroupProps()} className='rt-tr' >
                 {headerGroup.headers.map((column, key) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -204,43 +209,55 @@ const ReactTable = ({ columns, data, numFilas }) => {
                     }}
                   >
                     <div className='rt-resizable-header-content'>{column.render('Header')}</div>
-                    {/* Render the columns filter UI */}                    
-                  </th>                                    
+                    {/* Render the columns filter UI */}
+                  </th>
                 ))}
               </tr>
-              <tr {...headerGroup.getHeaderGroupProps()} className='rt-tr'>
-              {headerGroup.headers.map((column, key) => (
-                  <th className={classnames('rt-th rt-resizable-header')}
-                  style={{
-                    width: '100px',
-                    textAlign: 'center'
-                  }}
-                  >
-                  <div>
-                      {headerGroup.headers.length - 1 === key
-                        ? null
-                        : column.canFilter
-                          ? column.render('Filter')
-                          : null}
-                    </div>
+                <tr {...headerGroup.getHeaderGroupProps()} className='rt-tr'>
+                  {headerGroup.headers.map((column, key) => (
+                    <th className={classnames('rt-th rt-resizable-header')}
+                      style={{
+                        width: '100px',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <div>
+                        {headerGroup.headers.length - 1 === key
+                          ? null
+                          : column.canFilter
+                            ? column.render('Filter')
+                            : null}
+                      </div>
                     </th>
-                    ))}
+                  ))}
                 </tr></>
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className='rt-tbody' style={{ minWidth: 'min-content' }}>
             {page.map((row, i) => {
               prepareRow(row)
+
+
+
+
               return (
+
                 <tr
+
                   {...row.getRowProps()}
                   className={classnames('rt-tr', { ' -odd': i % 2 === 0 }, { ' -even': i % 2 === 1 })}
                 >
+                  {console.log('yesss ')}
+                  {console.log(row)}
+
                   {row.cells.map((cell) => {
                     const {
                       props: { value },
                     } = cell.render('Cell')
                     return (
+
+
+
                       <td
                         {...cell.getCellProps()}
                         className='rt-td'
@@ -251,6 +268,9 @@ const ReactTable = ({ columns, data, numFilas }) => {
                           display: 'inline',
                           justifyContent: 'center',
                           alignItems: 'center',
+                          background: row.original.indicador == 'SI' && row.original.porcentaje_entrada_maximo === null && row.original.porcentaje_entrada_medio === null
+                            && row.original.porcentaje_entrada_minimo === null && row.original.porcentaje_jornada_maximo === null && row.original.porcentaje_jornada_medio === null
+                            && row.original.porcentaje_jornada_minimo === null ? 'rgba(255,0,0,0.5)' : ''
                         }}
                       >
                         {value == 0 ? 0 : !value ? '-' : cell.render('Cell')}

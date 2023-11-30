@@ -35,7 +35,7 @@ const GraficoSector = ({ datosSector }) => {
       <PieChart
         className={classes.estiloGrafico}
         data={data}
-        radius={PieChart.defaultProps ? PieChart.defaultProps.radius - margen : 0}
+        radius={PieChart.defaultProps.radius - margen}
         lineWidth={lineWidth}
         ssegmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
         segmentsShift={(index) => (index === selected ? margen : 1)}

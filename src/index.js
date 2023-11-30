@@ -14,6 +14,7 @@ import AuthLayout from 'layouts/Auth/Auth'
 import AdminLayout from 'layouts/Admin/Admin'
 import 'assets/scss/material-ui-react.scss?v=1.0.0'
 
+
 axios.defaults.baseURL = process.env.REACT_APP_API
 
 ReactDOM.render(
