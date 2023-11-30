@@ -17,9 +17,13 @@ import {
    PROFILE_BY_POSITION_LIST_FAIL,
 } from '../constants/profileConstants.js'
 
-export const registerProfile = (profile) => async (dispatch) => {
+export const registerProfile = (profile, getState) => async (dispatch) => {
    try {
       dispatch({ type: PROFILE_REGISTER_REQUEST })
+
+      const {
+        userLogin: { userInfo }
+      } = getState()
 
       const config = {
          headers: {

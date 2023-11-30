@@ -11,18 +11,22 @@ import {
   PERMISSION_UPDATE_FAIL,
   PERMISSION_DELETE_FAIL,
   PERMISSION_DELETE_REQUEST,
-  PERMISSION_DELETE_SUCCESS,
+  PERMISSION_DELETE_SUCCESS
 } from '../constants/permissionConstants.js'
 
-export const registerPermission = (permission) => async (dispatch) => {
+export const registerPermission = (permission) => async (dispatch, getState) => {
   try {
     dispatch({ type: PERMISSION_REGISTER_REQUEST })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
 
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        'Cache-Control': 'no-cache',
-      },
+        'Cache-Control': 'no-cache'
+      }
     }
     const { data } = await axios.post('/api/permisos', permission, config)
 
@@ -30,7 +34,10 @@ export const registerPermission = (permission) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PERMISSION_REGISTER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
     })
   }
 }
@@ -40,14 +47,14 @@ export const getPermissions = () => async (dispatch, getState) => {
     dispatch({ type: PERMISSION_LIST_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        'Cache-Control': 'no-cache',
-      },
+        'Cache-Control': 'no-cache'
+      }
     }
     const { data } = await axios.get('/api/permisos', config)
 
@@ -55,32 +62,45 @@ export const getPermissions = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PERMISSION_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
     })
   }
 }
 
-export const permissionUpdateInfo = (permission) => async (dispatch, getState) => {
+export const permissionUpdateInfo = (permission) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: PERMISSION_UPDATE_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        'Cache-Control': 'no-cache',
-      },
+        'Cache-Control': 'no-cache'
+      }
     }
-    const { data } = await axios.put(`/api/permisos/${permission.id_permiso}`, permission, config)
+    const { data } = await axios.put(
+      `/api/permisos/${permission.id_permiso}`,
+      permission,
+      config
+    )
 
     dispatch({ type: PERMISSION_UPDATE_SUCCESS, payload: data })
   } catch (error) {
     dispatch({
       type: PERMISSION_UPDATE_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
     })
   }
 }
@@ -90,14 +110,14 @@ export const deletePermission = (id) => async (dispatch, getState) => {
     dispatch({ type: PERMISSION_DELETE_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        'Cache-Control': 'no-cache',
-      },
+        'Cache-Control': 'no-cache'
+      }
     }
 
     await axios.delete(`/api/permisos/${id}`, config)
@@ -106,7 +126,10 @@ export const deletePermission = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PERMISSION_DELETE_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
     })
   }
 }

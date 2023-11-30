@@ -17,9 +17,13 @@ import {
   SERVICE_RELATED_LIST_FAIL
 } from '../constants/serviceConstants'
 
-export const registerService = (service) => async (dispatch) => {
+export const registerService = (service) => async (dispatch, getState) => {
    try {
       dispatch({ type: SERVICE_REGISTER_REQUEST })
+
+      const {
+        userLogin: { userInfo }
+      } = getState()
 
       const config = {
          headers: {

@@ -19,7 +19,7 @@ const MenuProps = {
 }
 
 const MultiSelectProfile = ({ label, data, handleChangeMultiData, multiData }) => {
-  console.log(data.profile)
+  // console.log(data.profile)
 
   return (
     <>

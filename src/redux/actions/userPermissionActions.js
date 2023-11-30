@@ -14,9 +14,13 @@ import {
   USER_PERMISSION_DELETE_SUCCESS
 } from '../constants/userPermissionConstants.js'
 
-export const registerUserPermission = (userPermission) => async (dispatch) => {
+export const registerUserPermission = (userPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_PERMISSION_REGISTER_REQUEST })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
 
     const config = {
       headers: {

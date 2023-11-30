@@ -17,9 +17,13 @@ import {
   SUBDIRECTION_RELATED_LIST_FAIL
 } from '../constants/subdirectionConstants.js'
 
-export const registerSubdirection = (subdirection) => async (dispatch) => {
+export const registerSubdirection = (subdirection) => async (dispatch, getState) => {
   try {
     dispatch({ type: SUBDIRECTION_REGISTER_REQUEST })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
 
     const config = {
       headers: {

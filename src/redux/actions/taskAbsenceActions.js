@@ -14,9 +14,13 @@ import {
   TASK_ABSENCE_DELETE_SUCCESS,
 } from '../constants/taskAbsenceConstants.js'
 
-export const registerTaskAbsence = (taskAbsence) => async (dispatch) => {
+export const registerTaskAbsence = (taskAbsence) => async (dispatch, getState) => {
   try {
     dispatch({ type: TASK_ABSENCE_REGISTER_REQUEST })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
 
     const config = {
       headers: {

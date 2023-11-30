@@ -17,9 +17,13 @@ import {
    ROLE_RELATED_LIST_FAIL,
 } from '../constants/roleConstants'
 
-export const registerRole = (role) => async (dispatch) => {
+export const registerRole = (role) => async (dispatch, getState) => {
    try {
       dispatch({ type: ROLE_REGISTER_REQUEST })
+
+      const {
+        userLogin: { userInfo }
+      } = getState()
 
       const config = {
          headers: {

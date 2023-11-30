@@ -17,9 +17,13 @@ import {
    UNIT_RELATED_LIST_FAIL,
 } from '../constants/unitConstants.js'
 
-export const registerUnit = (unit) => async (dispatch) => {
+export const registerUnit = (unit) => async (dispatch, getState) => {
    try {
       dispatch({ type: UNIT_REGISTER_REQUEST })
+
+      const {
+        userLogin: { userInfo }
+      } = getState()
 
       const config = {
          headers: {
