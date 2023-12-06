@@ -50,7 +50,7 @@ const ActivitiesEquipoListScreen = () => {
           fecha_actividad_formateada: format(new Date(item.fecha_actividad), 'dd-MM-yyyy'),
           fecha_creacion: format(new Date(item.fecha_creacion), 'dd-MM-yyyy'),
           fecha_modificacion: format(new Date(item.fecha_modificacion), 'dd-MM-yyyy'),
-          codigos_trazabilidad: item.codigos_trazabilidad && item.codigos_trazabilidad.length > 0 ? item.codigos_trazabilidad.join(', '): '-',
+          // codigos_trazabilidad: item.codigos_trazabilidad && item.codigos_trazabilidad.length > 0 ? item.codigos_trazabilidad.join(', '): '-',
           actions: (
             <div className='actions-right'>
               <Button
