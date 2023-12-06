@@ -18,6 +18,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import esLocale from "date-fns/locale/es";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { getConfiguracions } from 'redux/actions/configuracionActions'
+import { getLastModalityActivity } from 'redux/actions/userActions'
 
 const useStyles = makeStyles(styles)
 
@@ -49,6 +50,9 @@ const ActivitiesRegisterScreen = () => {
   const [errorCodigosTrazabilidad, setErrorCodigosTrazabilidad] = useState('')
   const { loadingActivitiesRegister, successActivitiesRegister, errorActivitiesRegister } = useSelector(
     (state) => state.activitiesRegister
+  )
+  const { loadingModalityActivity, successModalityActivity, errorModalityActivity, lastModality } = useSelector(
+    (state) => state.lastModalityActivity
   )
 
   useEffect(() => {
@@ -94,6 +98,23 @@ const ActivitiesRegisterScreen = () => {
     
   }, [successConfiguracionList])
 
+  useEffect(() => {
+    console.log(lastModality)
+  if (successModalityActivity && lastModality === '') {
+    setActivityInfo({ ...activityInfo, modalidad: 'N/A' })
+  }
+  else if (successModalityActivity && lastModality !== '') {
+    setActivityInfo({ ...activityInfo, modalidad: lastModality })
+  }
+  else if (errorModalityActivity) {
+    setActivityInfo({ ...activityInfo, modalidad: 'N/A' })
+  }
+  
+  else {
+    dispatch(getLastModalityActivity())
+  }
+  }, [successModalityActivity, errorModalityActivity, loadingModalityActivity])
+
 
   useEffect(() => {
     return () => dispatch({ type: ACTIVITIES_REGISTER_RESET })
@@ -106,6 +127,7 @@ const ActivitiesRegisterScreen = () => {
     setErrorTask('')
     setErrorCodigosTrazabilidad('')
     setAlert(null)
+    dispatch(getLastModalityActivity())
   }
   const hideAlert = () => {
     setAlert(null)

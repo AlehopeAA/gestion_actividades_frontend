@@ -49,6 +49,9 @@ import {
   USER_SHARED_TASKS_COUNT_REQUEST,
   USER_SHARED_TASKS_COUNT_SUCCESS,
   USER_SHARED_TASKS_COUNT_FAIL,
+  USER_GET_LAST_MODALITY_ACTIVITY_REQUEST,
+  USER_GET_LAST_MODALITY_ACTIVITY_SUCCESS,
+  USER_GET_LAST_MODALITY_ACTIVITY_FAIL
 
 } from '../constants/userConstants'
 import parseJwt from 'shared/middlewares/parseJwt'
@@ -112,6 +115,33 @@ export const login = (infoObject) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    })
+  }
+}
+
+export const getLastModalityActivity = () => async (dispatch, getState) => {
+  try {
+    console.log('entrando en getLastModalityActivity')
+    dispatch({ type: USER_GET_LAST_MODALITY_ACTIVITY_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Cache-Control': 'no-cache',
+      },
+    }
+
+    const { data } = await axios.get(`/api/users/last-modality-activity`, config)
+
+    dispatch({ type: USER_GET_LAST_MODALITY_ACTIVITY_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: USER_GET_LAST_MODALITY_ACTIVITY_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     })
   }

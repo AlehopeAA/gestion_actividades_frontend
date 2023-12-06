@@ -62,6 +62,9 @@ import {
   USER_SHARED_TASKS_COUNT_REQUEST,
   USER_SHARED_TASKS_COUNT_SUCCESS,
   USER_SHARED_TASKS_COUNT_FAIL,
+  USER_GET_LAST_MODALITY_ACTIVITY_REQUEST,
+  USER_GET_LAST_MODALITY_ACTIVITY_SUCCESS,
+  USER_GET_LAST_MODALITY_ACTIVITY_FAIL
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -160,6 +163,27 @@ export const refreshTokenReducer = (state = {}, action) => {
       }
     case USER_REFRESH_TOKEN_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const lastModalityActivityReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_GET_LAST_MODALITY_ACTIVITY_REQUEST:
+      return { loadingModalityActivity: true }
+    case USER_GET_LAST_MODALITY_ACTIVITY_SUCCESS:
+      console.log(action.payload)
+      return {        
+        loadingModalityActivity: false,
+        successModalityActivity: true,
+        lastModality: action.payload,
+      }
+    case USER_GET_LAST_MODALITY_ACTIVITY_FAIL:
+      return {
+        loadingModalityActivity: false,
+        errorModalityActivity: action.payload,
+      }
     default:
       return state
   }

@@ -35,6 +35,7 @@ import {
   userGetFavoritesReducer,
   userRegisterFavoritesReducer,
   userSharedTasksCountReducer,
+  lastModalityActivityReducer
 } from './userReducers'
 import {
   logRegisterReducer,
@@ -383,6 +384,7 @@ export default combineReducers({
   userDelete: userDeleteReducer,
   userDetails: userDetailsReducer,
   userList: userListReducer,
+  lastModalityActivity: lastModalityActivityReducer,
   userListByRoleName: userListByRoleNameReducer,
   userListResponsibles: userListResponsiblesReducer,
   userListValidators: userListValidatorsReducer,
