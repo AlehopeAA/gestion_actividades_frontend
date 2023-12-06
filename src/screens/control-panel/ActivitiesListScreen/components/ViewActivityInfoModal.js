@@ -16,6 +16,7 @@ const ViewActivityInfoModal = ({ viewActivityInfo, closeViewActivityInfoModal, i
     unidades,
     validada,
     fecha_creacion,
+    fecha_modificacion
   } = info
 
   return (
@@ -33,6 +34,11 @@ const ViewActivityInfoModal = ({ viewActivityInfo, closeViewActivityInfoModal, i
           <GridItem xs={12} md={6}>
             <Typography variant='body1' gutterBottom>
               Fecha de Creacion: <strong>{format(new Date(fecha_creacion), 'dd-MM-yyyy')}</strong>
+            </Typography>
+          </GridItem>
+          <GridItem xs={12} md={6}>
+            <Typography variant='body1' gutterBottom>
+              Fecha de Modificación: <strong>{format(new Date(fecha_modificacion), 'dd-MM-yyyy')}</strong>
             </Typography>
           </GridItem>
 
