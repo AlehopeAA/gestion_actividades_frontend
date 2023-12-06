@@ -17,7 +17,7 @@ const validationFormsStyle = {
   formCategory: {
     marginBottom: '0',
     color: grayColor[0],
-    fontSize: '14px',
+    // fontSize: '14px',
     padding: '10px 0 10px',
   },
   center: {
@@ -47,7 +47,7 @@ const validationFormsStyle = {
     cursor: 'pointer',
     paddingLeft: '0',
     color: 'rgba(' + hexToRgb(blackColor) + ', 0.26)',
-    fontSize: '14px',
+    // fontSize: '14px',
     lineHeight: '1.428571429',
     fontWeight: '400',
     display: 'inline-flex',

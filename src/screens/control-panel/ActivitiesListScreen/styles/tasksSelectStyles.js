@@ -16,7 +16,7 @@ const validationSelectStyle = {
   ...buttonStyle,
   select: {
     padding: '12px 0 2px',
-    fontSize: '.75rem',
+    // fontSize: '.75rem',
     fontWeight: '400',
     lineHeight: '1.42857',
     textDecoration: 'none',
@@ -76,7 +76,7 @@ const validationSelectStyle = {
     },
   },
   selectMenuItem: {
-    fontSize: '13px',
+    // fontSize: '13px',
     padding: '10px 20px',
     margin: '0 5px',
     borderRadius: '2px',
