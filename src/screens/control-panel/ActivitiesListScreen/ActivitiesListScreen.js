@@ -18,6 +18,7 @@ import UpdateActivityModal from './components/UpdateActivityModal'
 import DeleteActivityModal from './components/DeleteActtivityModal'
 import { getActivities, getActivityInfo } from 'redux/actions/activitiesActions'
 import { ACTIVITIES_LIST_RESET, ACTIVITIES_INFO_RESET } from 'redux/constants/activitiesConstants'
+import moment from 'moment'
 
 const ActivitiesListScreen = () => {
   const ExcelFile = ReactExport.ExcelFile
@@ -51,7 +52,9 @@ const ActivitiesListScreen = () => {
       const activities = activitiesListData.map((item) => {
         return {
           ...item,
-          fecha_actividad: format(new Date(item.fecha_actividad), 'dd-MM-yyyy'),
+          fecha_actividad_original: item.fecha_actividad,
+          fecha_actividad_formateada: new Date(item.fecha_actividad),
+          //fecha_actividad: format(new Date(item.fecha_actividad), 'dd-MM-yyyy'),
           fecha_creacion: format(new Date(item.fecha_creacion), 'dd-MM-yyyy'),
           fecha_modificacion: format(new Date(item.fecha_modificacion), 'dd-MM-yyyy'),
           codigos_trazabilidad: item.codigos_trazabilidad && item.codigos_trazabilidad.length > 0 ? item.codigos_trazabilidad.join(', '): '-',          
@@ -119,7 +122,7 @@ const ActivitiesListScreen = () => {
         },
         {
           header: 'F. Actividad',
-          dataKey: 'fecha_actividad',
+          dataKey: 'fecha_actividad_formateada',
         },
         {
           header: 'Modalidad',
@@ -199,6 +202,10 @@ const ActivitiesListScreen = () => {
                         {
                           Header: 'Fecha',
                           accessor: 'fecha_actividad',
+                          Cell: ({ value }) => moment(value).format('DD-MM-yyyy'),
+                          sortType: (a, b) => {
+                            return new Date(a.values.fecha_actividad) - new Date(b.values.fecha_actividad);
+                          }
                         },
                         {
                           Header: 'Modalidad',
@@ -238,7 +245,7 @@ const ActivitiesListScreen = () => {
                   >
                     <ExcelFile.ExcelSheet data={data} name='Actividades'>
                       <ExcelFile.ExcelColumn label='Tarea' value='descripcion_tarea' />
-                      <ExcelFile.ExcelColumn label='Fecha Actividad' value='fecha_actividad' />
+                      <ExcelFile.ExcelColumn label='Fecha Actividad' value='fecha_actividad_formateada' />
                       <ExcelFile.ExcelColumn label='Modalidad' value='modalidad' />
                       <ExcelFile.ExcelColumn label='Horas' value='horas' />                      
                       <ExcelFile.ExcelColumn label='Unidades' value='unidades' />
