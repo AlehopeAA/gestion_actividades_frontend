@@ -236,19 +236,17 @@ const ReactTable = ({ columns, data, numFilas, color }) => {
           <tbody {...getTableBodyProps()} className='rt-tbody' style={{ minWidth: 'min-content' }}>
             {page.map((row, i) => {
               prepareRow(row)
-
-
-
-
+              console.log(row)
               return (
 
                 <tr
 
                   {...row.getRowProps()}
                   className={classnames('rt-tr', { ' -odd': i % 2 === 0 }, { ' -even': i % 2 === 1 })}
+                  style={{
+                    background: (row.original.porcentaje_responsabilidad && row.original.porcentaje_responsabilidad !== '100') ? 'rgba(255,0,0,0.5)' : ''
+                  }}
                 >
-                  {console.log('yesss ')}
-                  {console.log(row)}
 
                   {row.cells.map((cell) => {
                     const {
@@ -268,9 +266,9 @@ const ReactTable = ({ columns, data, numFilas, color }) => {
                           display: 'inline',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          background: row.original.indicador == 'SI' && row.original.porcentaje_entrada_maximo === null && row.original.porcentaje_entrada_medio === null
+                          background: (row.original.indicador == 'SI' && row.original.porcentaje_entrada_maximo === null && row.original.porcentaje_entrada_medio === null
                             && row.original.porcentaje_entrada_minimo === null && row.original.porcentaje_jornada_maximo === null && row.original.porcentaje_jornada_medio === null
-                            && row.original.porcentaje_jornada_minimo === null ? 'rgba(255,0,0,0.5)' : ''
+                            && row.original.porcentaje_jornada_minimo === null) ? 'rgba(255,0,0,0.5)' : ''
                         }}
                       >
                         {value == 0 ? 0 : !value ? '-' : cell.render('Cell')}
