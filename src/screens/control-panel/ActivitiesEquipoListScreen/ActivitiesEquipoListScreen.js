@@ -185,6 +185,11 @@ const ActivitiesEquipoListScreen = () => {
                           Cell: ({ value }) => <Tooltip title={<span style={{ fontSize: "16px" }}>{value}</span>} placement="bottom"><span>{value}</span></Tooltip>
                         },
                         {
+                          Header: 'Cód. perfil',
+                          accessor: 'codigos_perfil',
+                          Cell: ({ value }) => <Tooltip title={<span style={{ fontSize: "16px" }}>{value}</span>} placement="bottom"><span>{value}</span></Tooltip>
+                        },
+                        {
                           Header: 'Observaciones',
                           accessor: 'observaciones',
                           Cell: ({ value }) => <Tooltip title={<span style={{ fontSize: "16px" }}>{value}</span>} placement="bottom"><span>{value}</span></Tooltip>
