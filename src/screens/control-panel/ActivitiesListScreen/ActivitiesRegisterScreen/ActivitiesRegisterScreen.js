@@ -337,10 +337,10 @@ const ActivitiesRegisterScreen = () => {
                   </GridItem>
                 </GridContainer>
               )}
-              {errorCodigosTrazabilidad && (
+              {true && (
                 <GridContainer>
                   <GridItem xs={12}>
-                    <SnackbarContent message={errorCodigosTrazabilidad} color='danger' />
+                    <SnackbarContent message={errorCodigosTrazabilidad} color='info' />
                   </GridItem>
                 </GridContainer>
               )}
