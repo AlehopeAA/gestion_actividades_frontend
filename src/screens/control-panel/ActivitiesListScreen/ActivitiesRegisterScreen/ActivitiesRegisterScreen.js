@@ -19,6 +19,9 @@ import esLocale from "date-fns/locale/es";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { getConfiguracions } from 'redux/actions/configuracionActions'
 import { getLastModalityActivity } from 'redux/actions/userActions'
+import axios from "axios"
+import moment from 'moment'
+
 
 const useStyles = makeStyles(styles)
 
@@ -46,6 +49,7 @@ const ActivitiesRegisterScreen = () => {
   const [activityInfo, setActivityInfo] = useState(initialState)
   const [task, setTask] = useState('')
   const [alert, setAlert] = useState(null)
+  const [horas_dia, setHorasDia] = useState(0)
   const [errorTask, setErrorTask] = useState('')
   const [errorCodigosTrazabilidad, setErrorCodigosTrazabilidad] = useState('')
   const { loadingActivitiesRegister, successActivitiesRegister, errorActivitiesRegister } = useSelector(
@@ -54,6 +58,25 @@ const ActivitiesRegisterScreen = () => {
   const { loadingModalityActivity, successModalityActivity, errorModalityActivity, lastModality } = useSelector(
     (state) => state.lastModalityActivity
   )
+
+  const { userInfo } = useSelector((state) => state.userLogin)
+
+  useEffect(() => {
+    if (!userInfo && !activityInfo?.fecha_actividad) {
+      return
+    }
+    console.log(userInfo.token)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+      },
+    }
+    axios.post('/api/users/total-hours-day-activities', { fecha: moment(activityInfo?.fecha_actividad).format('YYYY/MM/DD')}, config).then((response) => {
+      setHorasDia(response.data)
+    })
+  }, [userInfo, activityInfo?.fecha_actividad])
 
   useEffect(() => {
     if (successActivitiesRegister) {
@@ -244,7 +267,23 @@ const ActivitiesRegisterScreen = () => {
                       }}
                     />
                   </GridItem>
-                </MuiPickersUtilsProvider>                
+                </MuiPickersUtilsProvider>
+                <GridItem xs={12} md={6}>
+                <CustomInput
+                    labelText={'Horas introducidas para el día seleccionado'}
+                    id='horas_dia'
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      value: horas_dia,
+                      //onChange: (e) => {setActivityInfo({ ...activityInfo, unidades: e.target.value }); construirCodigoTrazabilidad(activityInfo?.tarea[0], e.target.value)},
+                      //type: 'number',
+                      disabled: true,
+                      // required: activityInfo?.tarea[0]?.cuantificable === 'SI' ? true : false,
+                    }}
+                  />
+                  </GridItem>
                 <TasksSelect
                   activityInfo={activityInfo}
                   setActivityInfo={setActivityInfo}
@@ -337,7 +376,7 @@ const ActivitiesRegisterScreen = () => {
                   </GridItem>
                 </GridContainer>
               )}
-              {true && (
+              {errorCodigosTrazabilidad && (
                 <GridContainer>
                   <GridItem xs={12}>
                     <SnackbarContent message={errorCodigosTrazabilidad} color='info' />
